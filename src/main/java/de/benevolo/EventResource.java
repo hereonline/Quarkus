@@ -27,11 +27,7 @@ public class EventResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Event> events()
     {
-        Event event = new Event();
-        event.setName("peter");
-        event.setDescription("peters Festival");
-        event.setDate(new Date());
 
-        return List.of(event);
+        return eventRepository.listAll();
     }
 }
