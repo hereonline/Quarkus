@@ -41,6 +41,27 @@ public class EventResource {
 
             throw new NotFoundException("Event with ID " + id + " not found");
         }
+
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Event updateEvent(@PathParam("id") Long id, Event updateEvent) {
+        Event event = eventRepository.findById(id);
+        if (event == null) {
+            throw new NotFoundException("Event with ID " + id + " not found");
+        }
+
+         event.setName(updateEvent.getName());
+         event.setDescription(updateEvent.getDescription());
+         event.setDate(updateEvent.getDate());
+
+        eventRepository.persist(event);
+
+        return event;
     }
 
 }
