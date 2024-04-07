@@ -4,8 +4,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
-import java.util.Date;
 import java.util.List;
 
 @Path("/event")
@@ -30,4 +28,19 @@ public class EventResource {
 
         return eventRepository.listAll();
     }
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public void deleteEvent(@PathParam("id") Long id) {
+
+        Event event = eventRepository.findById(id);
+        if(event != null) {
+
+            eventRepository.delete(event);
+        } else {
+
+            throw new NotFoundException("Event with ID " + id + " not found");
+        }
+    }
+
 }
